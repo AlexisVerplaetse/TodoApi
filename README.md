@@ -30,6 +30,20 @@ URL locale par defaut :
 http://127.0.0.1:8000
 ```
 
+## Securite
+
+Toutes les routes API demandent une cle API dans le header HTTP :
+
+```text
+X-API-KEY: votre-cle-api
+```
+
+La cle est definie dans le fichier `.env` :
+
+```env
+API_KEY=votre-cle-api
+```
+
 ## Routes API
 
 Toutes les routes API sont prefixees par :
@@ -118,6 +132,7 @@ Toutes les routes API sont prefixees par :
 ```bash
 curl -X POST http://127.0.0.1:8000/api/todos \
   -H "Content-Type: application/json" \
+  -H "X-API-KEY: votre-cle-api" \
   -d "{\"title\":\"Apprendre Laravel\",\"fait\":0}"
 ```
 
@@ -126,6 +141,7 @@ curl -X POST http://127.0.0.1:8000/api/todos \
 ```bash
 curl -X PUT http://127.0.0.1:8000/api/todos/1 \
   -H "Content-Type: application/json" \
+  -H "X-API-KEY: votre-cle-api" \
   -d "{\"title\":\"Apprendre Laravel API\",\"fait\":1}"
 ```
 
@@ -134,6 +150,7 @@ curl -X PUT http://127.0.0.1:8000/api/todos/1 \
 ```bash
 curl -X POST http://127.0.0.1:8000/api/events \
   -H "Content-Type: application/json" \
+  -H "X-API-KEY: votre-cle-api" \
   -d "{\"title\":\"Revision\",\"startHour\":9,\"endHour\":11,\"colorValue\":\"#3b82f6\",\"date_event\":\"2026-05-06\"}"
 ```
 
