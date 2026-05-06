@@ -91,6 +91,22 @@ La cle est definie dans le fichier `.env` :
 API_KEY=votre-cle-api
 ```
 
+## Swagger
+
+La documentation Swagger est disponible ici quand le serveur Laravel tourne :
+
+```text
+http://127.0.0.1:8000/api/documentation
+```
+
+Pour regénérer la documentation OpenAPI :
+
+```bash
+php artisan l5-swagger:generate
+```
+
+Dans Swagger UI, cliquez sur `Authorize` puis renseignez la valeur de `X-API-KEY` pour tester les routes protegees.
+
 ## Routes API
 
 Toutes les routes API sont prefixees par :
