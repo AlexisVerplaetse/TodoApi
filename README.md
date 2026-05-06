@@ -96,8 +96,16 @@ API_KEY=votre-cle-api
 La documentation Swagger est disponible ici quand le serveur Laravel tourne :
 
 ```text
-http://127.0.0.1:8000/api/documentation
+http://127.0.0.1:8000/api/docs
 ```
+
+En production Render :
+
+```text
+https://todoapi-f9xq.onrender.com/api/docs
+```
+
+Les URLs `/swagger` et `/api/documentation` redirigent aussi vers Swagger.
 
 Pour regénérer la documentation OpenAPI :
 
