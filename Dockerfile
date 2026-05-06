@@ -38,13 +38,17 @@ RUN composer install \
 
 COPY . .
 COPY --from=assets /app/public/build ./public/build
-COPY docker/start.sh /usr/local/bin/start.sh
 
 RUN composer dump-autoload --optimize \
     && php artisan package:discover --ansi \
-    && chmod +x /usr/local/bin/start.sh \
     && chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 10000
 
-CMD ["/usr/local/bin/start.sh"]
+CMD php artisan config:clear \
+    && php artisan route:clear \
+    && php artisan view:clear \
+    && php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache \
+    && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
