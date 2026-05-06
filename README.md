@@ -40,6 +40,18 @@ Dans Render :
 New Web Service -> Deploy from Dockerfile
 ```
 
+Si Render affiche une erreur du style `command start was not found`, le service a probablement ete cree avec le runtime Node au lieu de Docker.
+
+Verifiez dans Render :
+
+```text
+Runtime / Language: Docker
+Dockerfile Path: ./Dockerfile
+Docker Command: vide
+```
+
+Le fichier `render.yaml` peut aussi etre utilise comme Blueprint Render pour forcer le runtime Docker.
+
 Variables d'environnement a definir dans Render :
 
 ```env
