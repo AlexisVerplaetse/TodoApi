@@ -30,6 +30,41 @@ URL locale par defaut :
 http://127.0.0.1:8000
 ```
 
+## Deploiement Render avec Docker
+
+Le projet contient un `Dockerfile` pret pour Render.
+
+Dans Render :
+
+```text
+New Web Service -> Deploy from Dockerfile
+```
+
+Variables d'environnement a definir dans Render :
+
+```env
+APP_NAME=TodoApi
+APP_ENV=production
+APP_DEBUG=false
+APP_KEY=base64:...
+APP_URL=https://votre-api.onrender.com
+
+API_KEY=votre-cle-api
+
+DB_CONNECTION=pgsql
+DB_HOST=...
+DB_PORT=5432
+DB_DATABASE=...
+DB_USERNAME=...
+DB_PASSWORD=...
+```
+
+Pour generer une cle `APP_KEY` :
+
+```bash
+php artisan key:generate --show
+```
+
 ## Securite
 
 Toutes les routes API demandent une cle API dans le header HTTP :
