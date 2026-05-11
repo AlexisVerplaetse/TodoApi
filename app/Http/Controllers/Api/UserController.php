@@ -36,8 +36,8 @@ class UserController extends Controller
     public function update(Request $request, User $user): JsonResponse
     {
         $data = $request->validate([
-            'email' => ['required', 'string', 'max:255'],
-            'mdp' => ['required', 'string', 'max:255'],
+            'email' => ['sometimes', 'required', 'string', 'max:255'],
+            'mdp' => ['sometimes', 'required', 'string', 'max:255'],
         ]);
 
         $user->update($data);

@@ -42,7 +42,7 @@ class User extends Model
         return [
             'id' => 'integer',
             'email' => 'string',
-            'mdp' => 'string',
+            'mdp' => 'hashed',
         ];
     }
 

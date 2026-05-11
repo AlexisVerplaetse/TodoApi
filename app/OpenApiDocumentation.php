@@ -20,28 +20,37 @@ use OpenApi\Attributes as OA;
 )]
 #[OA\Schema(
     schema: 'Todo',
-    required: ['id', 'title', 'fait'],
+    required: ['id', 'title', 'fait', 'id_user'],
     properties: [
         new OA\Property(property: 'id', type: 'integer', example: 1),
         new OA\Property(property: 'title', type: 'string', example: 'Apprendre Laravel'),
         new OA\Property(property: 'fait', type: 'integer', nullable: true, example: 0),
-        new OA\Property(property: 'id_user', type: 'number', format: 'int', nullable: true, example: 1),
+        new OA\Property(property: 'id_user', type: 'integer', nullable: true, example: 1),
     ],
     type: 'object'
 )]
 #[OA\Schema(
     schema: 'TodoInput',
-    required: ['title'],
+    required: ['title', 'id_user'],
     properties: [
         new OA\Property(property: 'title', type: 'string', maxLength: 255, example: 'Apprendre Laravel'),
         new OA\Property(property: 'fait', type: 'integer', nullable: true, example: 0),
-        new OA\Property(property: 'id_user', type: 'number', format: 'int', nullable: true, example: 1),
+        new OA\Property(property: 'id_user', type: 'integer', example: 1),
+    ],
+    type: 'object'
+)]
+#[OA\Schema(
+    schema: 'TodoUpdateInput',
+    properties: [
+        new OA\Property(property: 'title', type: 'string', maxLength: 255, example: 'Apprendre Laravel'),
+        new OA\Property(property: 'fait', type: 'integer', nullable: true, example: 1),
+        new OA\Property(property: 'id_user', type: 'integer', example: 1),
     ],
     type: 'object'
 )]
 #[OA\Schema(
     schema: 'Event',
-    required: ['id', 'title'],
+    required: ['id', 'title', 'id_user'],
     properties: [
         new OA\Property(property: 'id', type: 'integer', example: 1),
         new OA\Property(property: 'title', type: 'string', example: 'Revision'),
@@ -49,20 +58,59 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'endHour', type: 'number', format: 'float', nullable: true, example: 11),
         new OA\Property(property: 'colorValue', type: 'string', nullable: true, example: '#3b82f6'),
         new OA\Property(property: 'date_event', type: 'string', format: 'date', nullable: true, example: '2026-05-06'),
-        new OA\Property(property: 'id_user', type: 'number', format: 'int', nullable: true, example: 1),
+        new OA\Property(property: 'id_user', type: 'integer', nullable: true, example: 1),
     ],
     type: 'object'
 )]
 #[OA\Schema(
     schema: 'EventInput',
-    required: ['title'],
+    required: ['title', 'id_user'],
     properties: [
         new OA\Property(property: 'title', type: 'string', maxLength: 255, example: 'Revision'),
         new OA\Property(property: 'startHour', type: 'number', format: 'float', nullable: true, example: 9),
         new OA\Property(property: 'endHour', type: 'number', format: 'float', nullable: true, example: 11),
         new OA\Property(property: 'colorValue', type: 'string', maxLength: 255, nullable: true, example: '#3b82f6'),
         new OA\Property(property: 'date_event', type: 'string', format: 'date', nullable: true, example: '2026-05-06'),
-        new OA\Property(property: 'id_user', type: 'number', format: 'int', nullable: true, example: 1),
+        new OA\Property(property: 'id_user', type: 'integer', example: 1),
+    ],
+    type: 'object'
+)]
+#[OA\Schema(
+    schema: 'EventUpdateInput',
+    properties: [
+        new OA\Property(property: 'title', type: 'string', maxLength: 255, example: 'Revision'),
+        new OA\Property(property: 'startHour', type: 'number', format: 'float', nullable: true, example: 9),
+        new OA\Property(property: 'endHour', type: 'number', format: 'float', nullable: true, example: 11),
+        new OA\Property(property: 'colorValue', type: 'string', maxLength: 255, nullable: true, example: '#3b82f6'),
+        new OA\Property(property: 'date_event', type: 'string', format: 'date', nullable: true, example: '2026-05-06'),
+        new OA\Property(property: 'id_user', type: 'integer', example: 1),
+    ],
+    type: 'object'
+)]
+#[OA\Schema(
+    schema: 'User',
+    required: ['id', 'email', 'mdp'],
+    properties: [
+        new OA\Property(property: 'id', type: 'integer', example: 1),
+        new OA\Property(property: 'email', type: 'string', maxLength: 255, example: 'user@example.com'),
+        new OA\Property(property: 'mdp', type: 'string', maxLength: 255, example: 'motdepasse'),
+    ],
+    type: 'object'
+)]
+#[OA\Schema(
+    schema: 'UserInput',
+    required: ['email', 'mdp'],
+    properties: [
+        new OA\Property(property: 'email', type: 'string', maxLength: 255, example: 'user@example.com'),
+        new OA\Property(property: 'mdp', type: 'string', maxLength: 255, example: 'motdepasse'),
+    ],
+    type: 'object'
+)]
+#[OA\Schema(
+    schema: 'UserUpdateInput',
+    properties: [
+        new OA\Property(property: 'email', type: 'string', maxLength: 255, example: 'user@example.com'),
+        new OA\Property(property: 'mdp', type: 'string', maxLength: 255, example: 'nouveau-motdepasse'),
     ],
     type: 'object'
 )]
@@ -178,11 +226,11 @@ class OpenApiDocumentation
 
     #[OA\Put(
         path: '/api/todos/{todo}',
-        summary: 'Remplacer un todo',
+        summary: 'Modifier un todo',
         security: [['api_key' => []]],
         requestBody: new OA\RequestBody(
             required: true,
-            content: new OA\JsonContent(ref: '#/components/schemas/TodoInput')
+            content: new OA\JsonContent(ref: '#/components/schemas/TodoUpdateInput')
         ),
         tags: ['Todos'],
         parameters: [
@@ -227,7 +275,7 @@ class OpenApiDocumentation
         security: [['api_key' => []]],
         requestBody: new OA\RequestBody(
             required: true,
-            content: new OA\JsonContent(ref: '#/components/schemas/TodoInput')
+            content: new OA\JsonContent(ref: '#/components/schemas/TodoUpdateInput')
         ),
         tags: ['Todos'],
         parameters: [
@@ -389,11 +437,11 @@ class OpenApiDocumentation
 
     #[OA\Put(
         path: '/api/events/{event}',
-        summary: 'Remplacer un event',
+        summary: 'Modifier un event',
         security: [['api_key' => []]],
         requestBody: new OA\RequestBody(
             required: true,
-            content: new OA\JsonContent(ref: '#/components/schemas/EventInput')
+            content: new OA\JsonContent(ref: '#/components/schemas/EventUpdateInput')
         ),
         tags: ['Events'],
         parameters: [
@@ -438,7 +486,7 @@ class OpenApiDocumentation
         security: [['api_key' => []]],
         requestBody: new OA\RequestBody(
             required: true,
-            content: new OA\JsonContent(ref: '#/components/schemas/EventInput')
+            content: new OA\JsonContent(ref: '#/components/schemas/EventUpdateInput')
         ),
         tags: ['Events'],
         parameters: [
@@ -506,6 +554,217 @@ class OpenApiDocumentation
         ]
     )]
     public function deleteEvent(): void
+    {
+    }
+
+    #[OA\Get(
+        path: '/api/user',
+        summary: 'Lister les utilisateurs',
+        security: [['api_key' => []]],
+        tags: ['Users'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Liste des utilisateurs',
+                content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/User'))
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Cle API invalide',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+        ]
+    )]
+    public function listUsers(): void
+    {
+    }
+
+    #[OA\Post(
+        path: '/api/user',
+        summary: 'Creer un utilisateur',
+        security: [['api_key' => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: '#/components/schemas/UserInput')
+        ),
+        tags: ['Users'],
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'Utilisateur cree',
+                content: new OA\JsonContent(ref: '#/components/schemas/User')
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Cle API invalide',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Erreur de validation',
+                content: new OA\JsonContent(ref: '#/components/schemas/ValidationErrorResponse')
+            ),
+        ]
+    )]
+    public function createUser(): void
+    {
+    }
+
+    #[OA\Get(
+        path: '/api/user/{user}',
+        summary: 'Afficher un utilisateur',
+        security: [['api_key' => []]],
+        tags: ['Users'],
+        parameters: [
+            new OA\Parameter(
+                name: 'user',
+                description: 'Identifiant de l utilisateur',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Utilisateur trouve',
+                content: new OA\JsonContent(ref: '#/components/schemas/User')
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Cle API invalide',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Utilisateur introuvable',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+        ]
+    )]
+    public function showUser(): void
+    {
+    }
+
+    #[OA\Put(
+        path: '/api/user/{user}',
+        summary: 'Modifier un utilisateur',
+        security: [['api_key' => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: '#/components/schemas/UserUpdateInput')
+        ),
+        tags: ['Users'],
+        parameters: [
+            new OA\Parameter(
+                name: 'user',
+                description: 'Identifiant de l utilisateur',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Utilisateur modifie',
+                content: new OA\JsonContent(ref: '#/components/schemas/User')
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Cle API invalide',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Utilisateur introuvable',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Erreur de validation',
+                content: new OA\JsonContent(ref: '#/components/schemas/ValidationErrorResponse')
+            ),
+        ]
+    )]
+    public function replaceUser(): void
+    {
+    }
+
+    #[OA\Patch(
+        path: '/api/user/{user}',
+        summary: 'Modifier partiellement un utilisateur',
+        security: [['api_key' => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: '#/components/schemas/UserUpdateInput')
+        ),
+        tags: ['Users'],
+        parameters: [
+            new OA\Parameter(
+                name: 'user',
+                description: 'Identifiant de l utilisateur',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Utilisateur modifie',
+                content: new OA\JsonContent(ref: '#/components/schemas/User')
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Cle API invalide',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Utilisateur introuvable',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Erreur de validation',
+                content: new OA\JsonContent(ref: '#/components/schemas/ValidationErrorResponse')
+            ),
+        ]
+    )]
+    public function updateUser(): void
+    {
+    }
+
+    #[OA\Delete(
+        path: '/api/user/{user}',
+        summary: 'Supprimer un utilisateur',
+        security: [['api_key' => []]],
+        tags: ['Users'],
+        parameters: [
+            new OA\Parameter(
+                name: 'user',
+                description: 'Identifiant de l utilisateur',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 204, description: 'Utilisateur supprime'),
+            new OA\Response(
+                response: 401,
+                description: 'Cle API invalide',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Utilisateur introuvable',
+                content: new OA\JsonContent(ref: '#/components/schemas/ErrorResponse')
+            ),
+        ]
+    )]
+    public function deleteUser(): void
     {
     }
 }
