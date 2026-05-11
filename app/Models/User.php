@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class User extends Model
 {
-    protected $table = 'user_';
+    protected $table = 'user';
 
     protected $connection = 'pgsql';
 
