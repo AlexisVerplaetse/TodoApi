@@ -25,6 +25,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'id', type: 'integer', example: 1),
         new OA\Property(property: 'title', type: 'string', example: 'Apprendre Laravel'),
         new OA\Property(property: 'fait', type: 'integer', nullable: true, example: 0),
+        new OA\Property(property: 'id_user', type: 'number', format: 'int', nullable: true, example: 1),
     ],
     type: 'object'
 )]
@@ -34,6 +35,7 @@ use OpenApi\Attributes as OA;
     properties: [
         new OA\Property(property: 'title', type: 'string', maxLength: 255, example: 'Apprendre Laravel'),
         new OA\Property(property: 'fait', type: 'integer', nullable: true, example: 0),
+        new OA\Property(property: 'id_user', type: 'number', format: 'int', nullable: true, example: 1),
     ],
     type: 'object'
 )]
@@ -47,6 +49,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'endHour', type: 'number', format: 'float', nullable: true, example: 11),
         new OA\Property(property: 'colorValue', type: 'string', nullable: true, example: '#3b82f6'),
         new OA\Property(property: 'date_event', type: 'string', format: 'date', nullable: true, example: '2026-05-06'),
+        new OA\Property(property: 'id_user', type: 'number', format: 'int', nullable: true, example: 1),
     ],
     type: 'object'
 )]
@@ -59,6 +62,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'endHour', type: 'number', format: 'float', nullable: true, example: 11),
         new OA\Property(property: 'colorValue', type: 'string', maxLength: 255, nullable: true, example: '#3b82f6'),
         new OA\Property(property: 'date_event', type: 'string', format: 'date', nullable: true, example: '2026-05-06'),
+        new OA\Property(property: 'id_user', type: 'number', format: 'int', nullable: true, example: 1),
     ],
     type: 'object'
 )]

@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Event
@@ -16,39 +17,34 @@ use Illuminate\Database\Eloquent\Model;
  * @property float|null $endHour
  * @property string|null $colorValue
  * @property Carbon|null $date_event
+ * @property int|null $id_user
  */
 class Event extends Model
 {
     protected $table = 'events';
 
-    /**
-     * @var string
-     */
     protected $connection = 'pgsql';
 
     protected $primaryKey = 'id';
 
     public $timestamps = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'title',
         'startHour',
         'endHour',
         'colorValue',
         'date_event',
+        'id_user',
     ];
 
-    /**
-     * The model's default values for attributes.
-     *
-     * @var array<string, mixed>
-     */
     protected $attributes = [
+        'title' => '',
+        'startHour' => null,
+        'endHour' => null,
+        'colorValue' => '',
+        'date_event' => null,
+        'id_user' => null,
     ];
 
     /**
@@ -63,6 +59,15 @@ class Event extends Model
             'endHour' => 'float',
             'colorValue' => 'string',
             'date_event' => 'datetime',
+            'id_user' => 'integer',
         ];
+    }
+
+    /**
+     * Relation avec l'utilisateur
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

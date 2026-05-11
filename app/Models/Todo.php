@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Todo
@@ -12,49 +13,45 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $title
  * @property int|null $fait
+ * @property int|null $id_user
  */
 class Todo extends Model
 {
     protected $table = 'todos';
 
-    /**
-     * @var string
-     */
     protected $connection = 'pgsql';
 
     protected $primaryKey = 'id';
 
     public $timestamps = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'title',
         'fait',
+        'id_user',
     ];
 
-    /**
-     * The model's default values for attributes.
-     *
-     * @var array<string, mixed>
-     */
     protected $attributes = [
         'title' => '',
-        'fait' => '0',
+        'fait' => 0,
+        'id_user' => null,
     ];
 
-    /**
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'id' => 'integer',
             'title' => 'string',
             'fait' => 'integer',
+            'id_user' => 'integer',
         ];
+    }
+
+    /**
+     * Relation avec l'utilisateur
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

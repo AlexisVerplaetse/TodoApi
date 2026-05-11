@@ -11,7 +11,9 @@ class TodoController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(Todo::query()->orderBy('id')->get());
+        return response()->json(
+            Todo::query()->orderBy('id')->get()
+        );
     }
 
     public function store(Request $request): JsonResponse
@@ -19,6 +21,7 @@ class TodoController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'fait' => ['sometimes', 'nullable', 'integer'],
+            'id_user' => ['required', 'integer'],
         ]);
 
         $todo = Todo::create($data);
@@ -36,6 +39,7 @@ class TodoController extends Controller
         $data = $request->validate([
             'title' => ['sometimes', 'required', 'string', 'max:255'],
             'fait' => ['sometimes', 'nullable', 'integer'],
+            'id_user' => ['sometimes', 'required', 'integer'],
         ]);
 
         $todo->update($data);

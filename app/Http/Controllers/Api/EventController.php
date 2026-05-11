@@ -11,7 +11,9 @@ class EventController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(Event::query()->orderBy('id')->get());
+        return response()->json(
+            Event::query()->orderBy('id')->get()
+        );
     }
 
     public function store(Request $request): JsonResponse
@@ -22,6 +24,7 @@ class EventController extends Controller
             'endHour' => ['sometimes', 'nullable', 'numeric'],
             'colorValue' => ['sometimes', 'nullable', 'string', 'max:255'],
             'date_event' => ['sometimes', 'nullable', 'date'],
+            'id_user' => ['required', 'integer'],
         ]);
 
         $event = Event::create($data);
@@ -42,6 +45,7 @@ class EventController extends Controller
             'endHour' => ['sometimes', 'nullable', 'numeric'],
             'colorValue' => ['sometimes', 'nullable', 'string', 'max:255'],
             'date_event' => ['sometimes', 'nullable', 'date'],
+            'id_user' => ['sometimes', 'required', 'integer'],
         ]);
 
         $event->update($data);
